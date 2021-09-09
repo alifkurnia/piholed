@@ -1,0 +1,35 @@
+version: "3"
+services:
+  cloudflared:
+    container_name: cloudflared
+    image: visibilityspots/cloudflared
+    restart: unless-stopped
+    networks: 
+      pihole_net: 
+        ipv4_address: 10.0.0.2
+
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: 'Asia/Jakarta'
+      WEBPASSWORD: 'sembarang1'
+      ServerIp: 10.0.0.3
+      PIHOLE_DNS_: 10.0.0.2#5054;no
+    # Volumes store your data between container upgrades
+    volumes:
+      - './etc-pihole/:/etc/pihole/'
+      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    restart: unless-stopped
+
+networks: 
+  pihole_net:
+    driver: bridge
+    ipam: 
+      config: 
+        subnet: 10.0.0.0/29
