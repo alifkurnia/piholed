@@ -20,16 +20,18 @@ services:
       TZ: 'Asia/Jakarta'
       WEBPASSWORD: 'sembarang1'
       ServerIp: 10.0.0.3
-      PIHOLE_DNS_: 10.0.0.2#5054;no
+      PIHOLE_DNS_: '10.0.0.2#5054;no'
     # Volumes store your data between container upgrades
     volumes:
       - './etc-pihole/:/etc/pihole/'
       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
     restart: unless-stopped
+    dns: 
+      - 127.0.0.1
 
 networks: 
   pihole_net:
     driver: bridge
     ipam: 
       config: 
-        subnet: 10.0.0.0/29
+        - subnet: 10.0.0.0/29
