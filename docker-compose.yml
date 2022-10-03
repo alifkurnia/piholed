@@ -21,6 +21,7 @@ services:
       WEBPASSWORD: 'sembarang1'
       ServerIp: 10.0.0.3
       PIHOLE_DNS_: '10.0.0.2#5054;no'
+      VIRTUAL_HOST: 'rumahjember.alifkurnia.my.id'
     # Volumes store your data between container upgrades
     volumes:
       - './etc-pihole/:/etc/pihole/'
